@@ -8,7 +8,7 @@ import MealDetailScreen from '../screens/MealDetailScreen';
 const Stack = createStackNavigator();
 
 const MealsNavigator = (props) => (
-  <Stack.Navigator initialRouteName="MealDetail">
+  <Stack.Navigator initialRouteName="Categories">
     <Stack.Screen
       name="Categories"
       component={CategoriesScreen}
