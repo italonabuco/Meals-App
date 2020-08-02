@@ -3,12 +3,12 @@ import {View, Text, StyleSheet} from 'react-native';
 
 const MealDetailScreen = (props) => {
   const {text, route} = props;
-  const { id, description} = route.params;
+  const {id, description} = route.params || {};
   return (
     <View style={styles.screen}>
       <Text>{text}</Text>
-      <Text>{id}</Text>
-      <Text>{description}</Text>
+      {id && <Text>{id}</Text>}
+      {description && <Text>{description}</Text>}
     </View>
   );
 };
