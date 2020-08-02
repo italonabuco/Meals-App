@@ -24,13 +24,15 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import {NavigationContainer} from '@react-navigation/native';
+import MealsNavigator from './navigation/MealsNavigator';
 
 const App: () => React$Node = () => {
   return (
     <>
       <NavigationContainer>
         <StatusBar barStyle="dark-content" />
-        <SafeAreaView>
+        <MealsNavigator mealTitle="Meal Detail" mealScreen={{text: 'The Meal Detail Screen'}}/>
+        {/* <SafeAreaView>
           <ScrollView
             contentInsetAdjustmentBehavior="automatic"
             style={styles.scrollView}>
@@ -69,7 +71,7 @@ const App: () => React$Node = () => {
               <LearnMoreLinks />
             </View>
           </ScrollView>
-        </SafeAreaView>
+        </SafeAreaView> */}
       </NavigationContainer>
     </>
   );
