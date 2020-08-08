@@ -18,7 +18,9 @@ const MealsNavigator = (props) => (
         backgroundColor: Platform.OS === 'android' ?  Colors.primaryColor : '',
       },
       headerTintColor: Platform.OS === 'android' ? 'white' : Colors.primaryColor,
-    }}>
+    }}
+    mode="modal"
+    >
     <Stack.Screen
       name="Categories"
       component={CategoriesScreen}
