@@ -35,7 +35,8 @@ const styles = StyleSheet.create({
     margin: 15,
     height: 150,
     borderRadius: 10, // avoid that rippler effect goes off the component
-    overflow: 'hidden' // avoid that rippler effect goes off the component
+    overflow: Platform.OS === 'android' && Platform.Version >= 21 ? 'hidden': 'visible', // avoid that rippler effect goes off the component
+    elevation: 5, // for android
   },
   container: {
     flex: 1,
@@ -44,7 +45,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.26, // only effects ios
     shadowOffset: {width: 0, height: 2}, // only effects ios
     shadowRadius: 10, // only effects ios
-    elevation: 3, // for android
     padding: 15,
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
