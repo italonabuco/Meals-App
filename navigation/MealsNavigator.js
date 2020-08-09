@@ -13,8 +13,7 @@ import FiltersScreen from '../screens/FiltersScreen';
 
 import Colors from '../constants/Colors.js';
 import {Platform, Text} from 'react-native';
-import {HeaderButtons, Item} from 'react-navigation-header-buttons';
-import HeaderButton from '../components/HeaderButton';
+import MenuHeaderButton from '../components/MenuHeaderButton';
 
 const commonStackNavigatorScreenOptions = {
   headerStyle: {
@@ -29,12 +28,6 @@ const commonStackNavigatorScreenOptions = {
   headerTintColor: Platform.OS === 'android' ? 'white' : Colors.primaryColor,
 };
 
-const MenuHeaderButton = (props) => (
-  <HeaderButtons HeaderButtonComponent={HeaderButton}>
-    <Item title="Menu" iconName="menu-outline" onPress={props.onPress} />
-  </HeaderButtons>
-);
-
 const Stack = createStackNavigator();
 
 const MealsNavigator = (props) => (
@@ -48,7 +41,11 @@ const MealsNavigator = (props) => (
       options={(props) => ({
         title: 'Categories',
         headerLeft: () => (
-          <MenuHeaderButton onPress={() => props.navigation.toggleDrawer()} />
+          <MenuHeaderButton
+            title="Menu"
+            iconName="menu-outline"
+            onPress={() => props.navigation.toggleDrawer()}
+          />
         ),
       })}
     />
@@ -81,7 +78,11 @@ const FavoritesNavigator = (props) => (
       options={(props) => ({
         title: 'Your Favorites',
         headerLeft: () => (
-          <MenuHeaderButton onPress={() => props.navigation.toggleDrawer()} />
+          <MenuHeaderButton
+            title="Menu"
+            iconName="menu-outline"
+            onPress={() => props.navigation.toggleDrawer()}
+          />
         ),
       })}
     />
@@ -174,12 +175,25 @@ const FiltersNavigator = () => (
     <FilterStack.Screen
       name="Filter"
       component={FiltersScreen}
-      options={(props) => ({
-        title: 'Filter Meals',
-        headerLeft: () => (
-          <MenuHeaderButton onPress={() => props.navigation.toggleDrawer()} />
-        ),
-      })}
+      options={() => {
+        return {
+          title: 'Filter Meals',
+          headerLeft: () => (
+            <MenuHeaderButton
+              title="Menu"
+              iconName="menu-outline"
+              onPress={() => props.navigation.toggleDrawer()}
+            />
+          ),
+          headerRight: (props) => (
+            <MenuHeaderButton
+              title="Save"
+              iconName="save-outline"
+              onPress={() => console.log(props)}
+            />
+          ),
+        };
+      }}
     />
   </FilterStack.Navigator>
 );
