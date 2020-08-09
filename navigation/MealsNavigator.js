@@ -12,18 +12,19 @@ import FavoriteScreen from '../screens/FavoritesScreen';
 import Colors from '../constants/Colors.js';
 import {Platform} from 'react-native';
 
+const commonStackNavigatorScreenOptions = {
+  headerStyle: {
+    backgroundColor: Platform.OS === 'android' ? Colors.primaryColor : '',
+  },
+  headerTintColor: Platform.OS === 'android' ? 'white' : Colors.primaryColor,
+};
+
 const Stack = createStackNavigator();
 
 const MealsNavigator = (props) => (
   <Stack.Navigator
     initialRouteName="Categories"
-    screenOptions={{
-      headerStyle: {
-        backgroundColor: Platform.OS === 'android' ? Colors.primaryColor : '',
-      },
-      headerTintColor:
-        Platform.OS === 'android' ? 'white' : Colors.primaryColor,
-    }}
+    screenOptions={commonStackNavigatorScreenOptions}
     mode="modal">
     <Stack.Screen
       name="Categories"
@@ -47,6 +48,15 @@ const MealsNavigator = (props) => (
       )}
     </Stack.Screen>
   </Stack.Navigator>
+);
+
+const FavStack = createStackNavigator();
+
+const FavoritesNavigator = (props) => (
+  <FavStack.Navigator screenOptions={commonStackNavigatorScreenOptions}>
+    <FavStack.Screen name="Favorites" component={FavoriteScreen} options={{title: 'Your Favorites'}}/>
+    <FavStack.Screen name="Meal Detail" component={MealDetailScreen} />
+  </FavStack.Navigator>
 );
 
 const Tab =
@@ -104,7 +114,7 @@ const MealsFavTabNavigator = (props) => (
     />
     <Tab.Screen
       name="Favorites"
-      component={FavoriteScreen}
+      component={FavoritesNavigator}
       options={{tabBarLabel: 'Favorites!'}}
     />
   </Tab.Navigator>

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Platform} from 'react-native';
 import {HeaderButton} from 'react-navigation-header-buttons';
-import Icon from 'react-native-vector-icons/AntDesign';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import Colors from '../constants/Colors';
 
