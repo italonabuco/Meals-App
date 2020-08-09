@@ -24,18 +24,32 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import {NavigationContainer} from '@react-navigation/native';
+import {enableScreens} from 'react-native-screens';
+import {createStore, combineReducers} from 'redux';
+import {Provider} from 'react-redux';
+
 import MealsNavigator from './navigation/MealsNavigator';
-import { enableScreens } from 'react-native-screens';
+import mealsReducer from './store/reducers/meals';
 
 enableScreens();
+
+const rootReducers = combineReducers({
+  meals: mealsReducer,
+});
+
+const store = createStore(rootReducers);
 
 const App: () => React$Node = () => {
   return (
     <>
-      <NavigationContainer>
-        <StatusBar barStyle="dark-content" />
-        <MealsNavigator mealTitle="Meal Detail" mealScreen={{text: 'The Meal Detail Screen'}}/>
-        {/* <SafeAreaView>
+      <Provider store={store}>
+        <NavigationContainer>
+          <StatusBar barStyle="dark-content" />
+          <MealsNavigator
+            mealTitle="Meal Detail"
+            mealScreen={{text: 'The Meal Detail Screen'}}
+          />
+          {/* <SafeAreaView>
           <ScrollView
             contentInsetAdjustmentBehavior="automatic"
             style={styles.scrollView}>
@@ -75,7 +89,8 @@ const App: () => React$Node = () => {
             </View>
           </ScrollView>
         </SafeAreaView> */}
-      </NavigationContainer>
+        </NavigationContainer>
+      </Provider>
     </>
   );
 };

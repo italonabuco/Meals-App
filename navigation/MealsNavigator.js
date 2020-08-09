@@ -39,7 +39,7 @@ const MealsNavigator = (props) => (
       name="Categories"
       component={CategoriesScreen}
       options={(props) => ({
-        title: 'Categories',
+        title: 'Meal Categories',
         headerLeft: () => (
           <MenuHeaderButton
             title="Menu"
