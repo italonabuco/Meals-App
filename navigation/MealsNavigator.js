@@ -2,15 +2,19 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import CategoriesScreen from '../screens/CategoriesScreen';
 import CategoryMealsScreen from '../screens/CategoryMealsScreen';
 import MealDetailScreen from '../screens/MealDetailScreen';
 import FavoriteScreen from '../screens/FavoritesScreen';
+import FiltersScreen from '../screens/FiltersScreen';
 
 import Colors from '../constants/Colors.js';
 import {Platform} from 'react-native';
+import {HeaderButtons, Item} from 'react-navigation-header-buttons';
+import HeaderButton from '../components/HeaderButton';
 
 const commonStackNavigatorScreenOptions = {
   headerStyle: {
@@ -18,6 +22,12 @@ const commonStackNavigatorScreenOptions = {
   },
   headerTintColor: Platform.OS === 'android' ? 'white' : Colors.primaryColor,
 };
+
+const MenuHeaderButton = (props) => (
+  <HeaderButtons HeaderButtonComponent={HeaderButton}>
+    <Item title="Menu" iconName="menu-outline" onPress={props.onPress} />
+  </HeaderButtons>
+);
 
 const Stack = createStackNavigator();
 
@@ -29,7 +39,12 @@ const MealsNavigator = (props) => (
     <Stack.Screen
       name="Categories"
       component={CategoriesScreen}
-      options={{title: 'Categories'}}
+      options={(props) => ({
+        title: 'Categories',
+        headerLeft: () => (
+          <MenuHeaderButton onPress={() => props.navigation.toggleDrawer()} />
+        ),
+      })}
     />
     <Stack.Screen
       name="CategoryMeal"
@@ -54,7 +69,16 @@ const FavStack = createStackNavigator();
 
 const FavoritesNavigator = (props) => (
   <FavStack.Navigator screenOptions={commonStackNavigatorScreenOptions}>
-    <FavStack.Screen name="Favorites" component={FavoriteScreen} options={{title: 'Your Favorites'}}/>
+    <FavStack.Screen
+      name="Favorites"
+      component={FavoriteScreen}
+      options={(props) => ({
+        title: 'Your Favorites',
+        headerLeft: () => (
+          <MenuHeaderButton onPress={() => props.navigation.toggleDrawer()} />
+        ),
+      })}
+    />
     <FavStack.Screen name="Meal Detail" component={MealDetailScreen} />
   </FavStack.Navigator>
 );
@@ -120,4 +144,30 @@ const MealsFavTabNavigator = (props) => (
   </Tab.Navigator>
 );
 
-export default MealsFavTabNavigator;
+const FilterStack = createStackNavigator();
+
+const FiltersNavigator = () => (
+  <FilterStack.Navigator screenOptions={commonStackNavigatorScreenOptions}>
+    <FilterStack.Screen
+      name="Filter"
+      component={FiltersScreen}
+      options={(props) => ({
+        title: 'Filter Meals',
+        headerLeft: () => (
+          <MenuHeaderButton onPress={() => props.navigation.toggleDrawer()} />
+        ),
+      })}
+    />
+  </FilterStack.Navigator>
+);
+
+const Drawer = createDrawerNavigator();
+
+const MainNavigator = (props) => (
+  <Drawer.Navigator>
+    <Drawer.Screen name="MealsFavs" component={MealsFavTabNavigator} />
+    <Drawer.Screen name="Filters" component={FiltersNavigator} />
+  </Drawer.Navigator>
+);
+
+export default MainNavigator;
