@@ -1,9 +1,10 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useCallback} from 'react';
 import {View, Text, StyleSheet, ScrollView, Image} from 'react-native';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import HeaderButton from '../components/HeaderButton';
 import DefaultText from '../components/DefaultText';
+import {toggleFavoriteAction} from '../store/actions/meals';
 
 const ListItem = (props) => {
   return (
@@ -17,7 +18,14 @@ const MealDetailScreen = (props) => {
   const {route, navigation} = props;
   const {mealId} = route.params || {};
 
-  const availableMeals = useSelector(state => state.meals.meals);
+  const availableMeals = useSelector((state) => state.meals.meals);
+  
+  const dispatch = useDispatch();
+
+  const executeToggleFavoriteAction = useCallback(
+    (id) => dispatch(toggleFavoriteAction(id)),
+    [dispatch],
+  );
 
   const selectedMeal = availableMeals.find((meal) => meal.id === mealId);
 
@@ -29,12 +37,12 @@ const MealDetailScreen = (props) => {
           <Item
             title="Favortie"
             iconName="star"
-            onPress={() => console.log(selectedMeal.title)}
+            onPress={() => executeToggleFavoriteAction(selectedMeal.id)}
           />
         </HeaderButtons>
       ),
     });
-  }, [selectedMeal]);
+  }, [selectedMeal, executeToggleFavoriteAction]);
 
   return (
     <ScrollView>
