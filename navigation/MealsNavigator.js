@@ -175,7 +175,7 @@ const FiltersNavigator = () => (
     <FilterStack.Screen
       name="Filter"
       component={FiltersScreen}
-      options={() => {
+      options={(props) => {
         return {
           title: 'Filter Meals',
           headerLeft: () => (
