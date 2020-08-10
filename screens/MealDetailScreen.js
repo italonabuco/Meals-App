@@ -19,7 +19,10 @@ const MealDetailScreen = (props) => {
   const {mealId} = route.params || {};
 
   const availableMeals = useSelector((state) => state.meals.meals);
-  
+  const favoritedMeal = useSelector((state) =>
+    state.meals.favoritedMeals.some((meal) => meal.id === mealId),
+  );
+
   const dispatch = useDispatch();
 
   const executeToggleFavoriteAction = useCallback(
@@ -36,13 +39,13 @@ const MealDetailScreen = (props) => {
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
           <Item
             title="Favortie"
-            iconName="star"
+            iconName={favoritedMeal ? 'star' : 'star-outline'}
             onPress={() => executeToggleFavoriteAction(selectedMeal.id)}
           />
         </HeaderButtons>
       ),
     });
-  }, [selectedMeal, executeToggleFavoriteAction]);
+  }, [selectedMeal, executeToggleFavoriteAction, favoritedMeal]);
 
   return (
     <ScrollView>
